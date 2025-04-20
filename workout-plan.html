@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Workout Plan - Elite Gym</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            background: linear-gradient(to bottom, rgba(10, 18, 42, 0.9), rgba(22, 36, 71, 0.9)), url('gym-bg.jpg') no-repeat center center/cover;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: #e2e8f0;
+        }
+
+        .workout-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .workout-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .workout-header h1 {
+            color: #facc15;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .workout-summary {
+            background: rgba(31, 41, 59, 0.95);
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-item {
+            background: rgba(26, 32, 44, 0.5);
+            padding: 1rem;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .summary-item h3 {
+            color: #facc15;
+            margin-bottom: 0.5rem;
+        }
+
+        .workout-schedule {
+            background: rgba(31, 41, 59, 0.95);
+            padding: 2rem;
+            border-radius: 10px;
+        }
+
+        .week-container {
+            margin-bottom: 2rem;
+        }
+
+        .week-header {
+            color: #facc15;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #facc15;
+        }
+
+        .day-container {
+            background: rgba(26, 32, 44, 0.5);
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .day-header {
+            color: #facc15;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .exercise-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .exercise-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #4a5568;
+        }
+
+        .exercise-name {
+            font-weight: bold;
+        }
+
+        .exercise-details {
+            color: #a0aec0;
+        }
+
+        .print-btn {
+            display: block;
+            width: 200px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: #facc15;
+            color: #0d1529;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .print-btn:hover {
+            background: #eab308;
+            transform: translateY(-2px);
+        }
+
+        @media print {
+            body {
+                background: none;
+                color: #000;
+            }
+
+            .workout-container {
+                max-width: 100%;
+                padding: 0;
+            }
+
+            .workout-summary, .workout-schedule {
+                background: none;
+                padding: 0;
+            }
+
+            .summary-item, .day-container {
+                background: none;
+                border: 1px solid #000;
+            }
+
+            .print-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="workout-container">
+        <div class="workout-header">
+            <h1>Your Personalized Workout Plan</h1>
+            <p>Based on your fitness assessment</p>
+        </div>
+
+        <div class="workout-summary">
+            <h2>Your Fitness Profile</h2>
+            <div class="summary-grid" id="fitnessProfile">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <div class="workout-schedule">
+            <h2>12-Week Workout Schedule</h2>
+            <div id="workoutSchedule">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <a href="#" class="print-btn" onclick="window.print()">
+            <i class="fa fa-print"></i> Print Workout Plan
+        </a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser || !currentUser.fitnessAssessment) {
+                window.location.href = 'fitness-assessment.html';
+                return;
+            }
+
+            const assessment = currentUser.fitnessAssessment;
+            
+            // Update fitness profile
+            const profileGrid = document.getElementById('fitnessProfile');
+            profileGrid.innerHTML = `
+                <div class="summary-item">
+                    <h3>Age</h3>
+                    <p>${assessment.age} years</p>
+                </div>
+                <div class="summary-item">
+                    <h3>Gender</h3>
+                    <p>${assessment.gender}</p>
+                </div>
+                <div class="summary-item">
+                    <h3>Height</h3>
+                    <p>${assessment.height} cm</p>
+                </div>
+                <div class="summary-item">
+                    <h3>Weight</h3>
+                    <p>${assessment.weight} kg</p>
+                </div>
+                <div class="summary-item">
+                    <h3>Fitness Level</h3>
+                    <p>${assessment.fitnessLevel}</p>
+                </div>
+                <div class="summary-item">
+                    <h3>Primary Goal</h3>
+                    <p>${assessment.goal}</p>
+                </div>
+                <div class="summary-item">
+                    <h3>Workout Days</h3>
+                    <p>${assessment.workoutDays} days/week</p>
+                </div>
+            `;
+
+            // Generate workout schedule based on assessment
+            const scheduleContainer = document.getElementById('workoutSchedule');
+            const weeks = generateWorkoutSchedule(assessment);
+            
+            weeks.forEach((week, index) => {
+                const weekElement = document.createElement('div');
+                weekElement.className = 'week-container';
+                weekElement.innerHTML = `
+                    <h3 class="week-header">Week ${index + 1}</h3>
+                    ${week.days.map(day => `
+                        <div class="day-container">
+                            <h4 class="day-header">${day.name}</h4>
+                            <ul class="exercise-list">
+                                ${day.exercises.map(exercise => `
+                                    <li class="exercise-item">
+                                        <span class="exercise-name">${exercise.name}</span>
+                                        <span class="exercise-details">${exercise.sets}x${exercise.reps}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                    `).join('')}
+                `;
+                scheduleContainer.appendChild(weekElement);
+            });
+        });
+
+        function generateWorkoutSchedule(assessment) {
+            // This is a simplified version. In a real application, this would be more sophisticated
+            const weeks = [];
+            const exercises = {
+                beginner: {
+                    weightLoss: [
+                        { name: 'Bodyweight Squats', sets: 3, reps: 12 },
+                        { name: 'Push-ups', sets: 3, reps: 10 },
+                        { name: 'Plank', sets: 3, reps: '30s' },
+                        { name: 'Jumping Jacks', sets: 3, reps: 20 }
+                    ],
+                    muscleGain: [
+                        { name: 'Bodyweight Squats', sets: 3, reps: 12 },
+                        { name: 'Push-ups', sets: 3, reps: 10 },
+                        { name: 'Lunges', sets: 3, reps: 10 },
+                        { name: 'Plank', sets: 3, reps: '30s' }
+                    ]
+                },
+                intermediate: {
+                    weightLoss: [
+                        { name: 'Squats', sets: 4, reps: 12 },
+                        { name: 'Push-ups', sets: 4, reps: 12 },
+                        { name: 'Plank', sets: 3, reps: '45s' },
+                        { name: 'Burpees', sets: 3, reps: 15 }
+                    ],
+                    muscleGain: [
+                        { name: 'Squats', sets: 4, reps: 12 },
+                        { name: 'Push-ups', sets: 4, reps: 12 },
+                        { name: 'Lunges', sets: 4, reps: 12 },
+                        { name: 'Plank', sets: 3, reps: '45s' }
+                    ]
+                }
+            };
+
+            for (let week = 1; week <= 12; week++) {
+                const days = [];
+                const workoutDays = parseInt(assessment.workoutDays);
+                
+                for (let day = 1; day <= workoutDays; day++) {
+                    const dayName = `Day ${day}`;
+                    const levelExercises = exercises[assessment.fitnessLevel][assessment.goal];
+                    
+                    days.push({
+                        name: dayName,
+                        exercises: levelExercises
+                    });
+                }
+                
+                weeks.push({ days });
+            }
+
+            return weeks;
+        }
+    </script>
+</body>
+</html> 

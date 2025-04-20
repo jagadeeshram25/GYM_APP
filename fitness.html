@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Planner - Elite Gym</title>
+    <link rel="stylesheet" href="css/fitness.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .option input[type="radio"] {
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .option-text {
+            flex: 1;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .option input[type="radio"]:checked + .option-text {
+            color: #facc15;
+        }
+
+        .option input[type="radio"]:checked ~ .option {
+            background: rgba(250, 204, 21, 0.1);
+            border-color: #facc15;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Authentication Check Section -->
+        <section id="authCheck" class="auth-section">
+            <div class="auth-content">
+                <i class="fas fa-user-lock"></i>
+                <h2>Authentication Required</h2>
+                <p>Please log in or sign up to access the Fitness Planner.</p>
+                <div class="auth-buttons">
+                    <a href="login.html" class="btn login-btn">Login</a>
+                    <a href="signup.html" class="btn signup-btn">Sign Up</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fitness Quiz Section -->
+        <section id="fitnessQuiz" class="quiz-section" style="display: none;">
+            <div class="quiz-header">
+                <h2>Fitness Quiz</h2>
+                <p>Answer these questions to get your personalized workout plan</p>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">Question 1 of 5</div>
+            </div>
+
+            <div class="question-container">
+                <div class="question-content">
+                    <h3 id="questionText">What is your primary fitness goal?</h3>
+                    <div class="options-container" id="optionsContainer">
+                        <!-- Options will be dynamically added here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="navigation-buttons">
+                <button class="btn prev-btn" id="prevBtn" disabled>Previous</button>
+                <button class="btn next-btn" id="nextBtn">Next</button>
+            </div>
+        </section>
+
+        <!-- Workout Plan Section -->
+        <section id="workoutPlan" class="plan-section" style="display: none;">
+            <div class="plan-header">
+                <h2>Your Personalized Workout Plan</h2>
+                <p>Based on your fitness goals and preferences</p>
+            </div>
+
+            <div class="plan-controls">
+                <button class="control-btn" id="prevWeekBtn">
+                    <i class="fas fa-chevron-left"></i> Previous Week
+                </button>
+                <span id="weekDisplay">Week 1</span>
+                <button class="control-btn" id="nextWeekBtn">
+                    Next Week <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <div class="weekly-plan" id="weeklyPlan">
+            </div>
+        </section>
+
+        <!-- Return to Home Button -->
+        <a href="index.html" class="return-home-btn">
+            <i class="fas fa-home"></i> Return to Home
+        </a>
+    </div>
+   <script src="js/fitness.js"></script>
+    <script>
+        // Check authentication status
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        const authCheck = document.getElementById('authCheck');
+        const quizSection = document.getElementById('fitnessQuiz');
+        const planSection = document.getElementById('workoutPlan');
+
+        if (currentUser) {
+            authCheck.style.display = 'none';
+            quizSection.style.display = 'block';
+        }
+
+        // Quiz questions
+        const questions = [
+            {
+                question: "What is your primary fitness goal?",
+                options: [
+                    "Weight Loss",
+                    "Muscle Gain",
+                    "Endurance Training",
+                    "General Fitness"
+                ]
+            },
+            {
+                question: "How many days per week can you commit to working out?",
+                options: [
+                    "2-3 days",
+                    "4-5 days",
+                    "6-7 days"
+                ]
+            },
+            {
+                question: "What is your current fitness level?",
+                options: [
+                    "Beginner",
+                    "Intermediate",
+                    "Advanced"
+                ]
+            },
+            {
+                question: "Do you have any specific areas you want to focus on?",
+                options: [
+                    "Upper Body",
+                    "Lower Body",
+                    "Core",
+                    "Full Body"
+                ]
+            },
+            {
+                question: "How long can you dedicate to each workout session?",
+                options: [
+                    "30 minutes",
+                    "45 minutes",
+                    "60 minutes",
+                    "90 minutes"
+                ]
+            }
+        ];
+
+        // Quiz state
+        let currentQuestion = 0;
+        let answers = [];
+
+        // DOM elements
+        const questionText = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+
+        // Initialize quiz
+        function initQuiz() {
+            showQuestion();
+            updateProgress();
+        }
+
+        // Show current question
+        function showQuestion() {
+            const question = questions[currentQuestion];
+            questionText.textContent = question.question;
+            
+            optionsContainer.innerHTML = '';
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.innerHTML = `
+                    <input type="radio" name="answer" id="option${index}" value="${option}">
+                    <label for="option${index}" class="option-text">${option}</label>
+                `;
+                
+                // Add click handler to the entire option element
+                optionElement.addEventListener('click', () => {
+                    const radioInput = optionElement.querySelector('input[type="radio"]');
+                    radioInput.checked = true;
+                });
+                
+                optionsContainer.appendChild(optionElement);
+            });
+
+            // Check if there's a previous answer
+            if (answers[currentQuestion]) {
+                document.querySelector(input[value="${answers[currentQuestion]}"]).checked = true;
+            }
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            progressFill.style.width = `${progress}%`;
+            progressText.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+        }
+
+        // Event listeners
+        prevBtn.addEventListener('click', () => {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion();
+                updateProgress();
+                nextBtn.disabled = false;
+                prevBtn.disabled = currentQuestion === 0;
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            const selectedOption = document.querySelector('input[name="answer"]:checked');
+            if (selectedOption) {
+                answers[currentQuestion] = selectedOption.value;
+                
+                if (currentQuestion < questions.length - 1) {
+                    currentQuestion++;
+                    showQuestion();
+                    updateProgress();
+                    prevBtn.disabled = false;
+                    nextBtn.textContent = currentQuestion === questions.length - 1 ? 'Submit' : 'Next';
+                } else {
+                    generateWorkoutPlan();
+                }
+            } else {
+                alert('Please select an option');
+            }
+        });
+
+        // Generate workout plan based on answers
+        function generateWorkoutPlan() {
+            quizSection.style.display = 'none';
+            planSection.style.display = 'block';
+
+            const weeklyPlan = document.getElementById('weeklyPlan');
+            weeklyPlan.innerHTML = '';
+
+            // Generate workout plan based on answers
+            const daysPerWeek = parseInt(answers[1].split('-')[0]);
+            const fitnessLevel = answers[2];
+            const focusArea = answers[3];
+            const workoutDuration = parseInt(answers[4]);
+
+            const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+            
+            for (let i = 0; i < daysPerWeek; i++) {
+                const dayPlan = document.createElement('div');
+                dayPlan.className = 'day-plan fade-in';
+                dayPlan.style.animationDelay = `${i * 0.1}s`;
+                
+                const exercises = generateExercises(fitnessLevel, focusArea, workoutDuration);
+                
+                dayPlan.innerHTML = `
+                    <h3>${days[i]}</h3>
+                    <ul class="exercise-list">
+                        ${exercises.map(exercise => <li>${exercise}</li>).join('')}
+                    </ul>
+                `;
+                
+                weeklyPlan.appendChild(dayPlan);
+            }
+
+            // Save workout plan to user's profile
+            const workoutPlan = {
+                daysPerWeek,
+                fitnessLevel,
+                focusArea,
+                workoutDuration,
+                exercises: Array.from({length: daysPerWeek}, (_, i) => generateExercises(fitnessLevel, focusArea, workoutDuration))
+            };
+
+            currentUser.workoutPlan = workoutPlan;
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        }
+
+        // Generate exercises based on user preferences
+        function generateExercises(fitnessLevel, focusArea, duration) {
+            const exercises = [];
+            const sets = Math.floor(duration / 10); // Approximate number of exercises based on duration
+            
+            const exerciseLibrary = {
+                'Upper Body': [
+                    'Push-ups: 3 sets of 10-15 reps',
+                    'Pull-ups: 3 sets of 8-12 reps',
+                    'Dumbbell Shoulder Press: 3 sets of 10-12 reps',
+                    'Bicep Curls: 3 sets of 12-15 reps',
+                    'Tricep Dips: 3 sets of 10-12 reps'
+                ],
+                'Lower Body': [
+                    'Squats: 3 sets of 12-15 reps',
+                    'Lunges: 3 sets of 10-12 reps per leg',
+                    'Deadlifts: 3 sets of 8-10 reps',
+                    'Calf Raises: 3 sets of 15-20 reps',
+                    'Leg Press: 3 sets of 10-12 reps'
+                ],
+                'Core': [
+                    'Plank: 3 sets of 30-60 seconds',
+                    'Russian Twists: 3 sets of 15-20 reps',
+                    'Leg Raises: 3 sets of 12-15 reps',
+                    'Bicycle Crunches: 3 sets of 15-20 reps',
+                    'Mountain Climbers: 3 sets of 20-30 reps'
+                ],
+                'Full Body': [
+                    'Burpees: 3 sets of 10-12 reps',
+                    'Kettlebell Swings: 3 sets of 12-15 reps',
+                    'Mountain Climbers: 3 sets of 20-30 reps',
+                    'Jump Squats: 3 sets of 12-15 reps',
+                    'Push-ups: 3 sets of 10-15 reps'
+                ]
+            };
+
+            const selectedExercises = exerciseLibrary[focusArea];
+            const numExercises = Math.min(sets, selectedExercises.length);
+
+            for (let i = 0; i < numExercises; i++) {
+                exercises.push(selectedExercises[i]);
+            }
+
+            return exercises;
+        }
+
+        // Initialize the quiz when the page loads
+        initQuiz();
+    </script>
+</body>
+</html>

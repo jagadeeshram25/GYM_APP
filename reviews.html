@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviews - Elite Gym</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/reviews.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #0d1529;
+            color: #e2e8f0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: rgba(10, 18, 42, 0.9);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            box-shadow: 0px 4px 15px rgba(250, 204, 21, 0.3);
+        }
+
+        .navbar .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+        }
+
+        .navbar .logo-img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 50%;
+            filter: drop-shadow(0 0 5px rgba(250, 204, 21, 0.5));
+            transition: transform 0.3s ease;
+            border: 2px solid #facc15;
+        }
+
+        .navbar .logo-img:hover {
+            transform: scale(1.1);
+        }
+
+        .navbar .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #facc15;
+            text-transform: uppercase;
+            text-shadow: 0 0 15px rgba(250, 204, 21, 0.8);
+            position: relative;
+            letter-spacing: 2px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px rgba(250, 204, 21, 0.8),
+                           0 0 20px rgba(250, 204, 21, 0.6),
+                           0 0 30px rgba(250, 204, 21, 0.4);
+            }
+            to {
+                text-shadow: 0 0 20px rgba(250, 204, 21, 0.8),
+                           0 0 30px rgba(250, 204, 21, 0.6),
+                           0 0 40px rgba(250, 204, 21, 0.4);
+            }
+        }
+
+        .navbar .logo::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(250, 204, 21, 0.3) 0%, transparent 70%);
+            z-index: -1;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+
+        .navbar .logo:hover::after {
+            opacity: 1;
+        }
+
+        .navbar nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar ul li a {
+            text-decoration: none;
+            color: #f5f7fa;
+            transition: 0.3s;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .navbar ul li a:hover {
+            color: #facc15;
+            text-shadow: 0 0 5px rgba(250, 204, 21, 0.5);
+        }
+
+        .navbar ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #facc15;
+            transition: width 0.3s ease;
+        }
+
+        .navbar ul li a:hover::after {
+            width: 100%;
+        }
+
+        .reviews-section {
+            padding: 8rem 2rem;
+            background: linear-gradient(135deg, #0d1529 0%, #1e293b 100%);
+        }
+
+        .reviews-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .reviews-title {
+            text-align: center;
+            color: #facc15;
+            font-size: 3rem;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .reviews-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: #facc15;
+            border-radius: 2px;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .review-card {
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(250, 204, 21, 0.1);
+        }
+
+        .review-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(250, 204, 21, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .review-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .review-card:hover::before {
+            opacity: 1;
+        }
+
+        .rating {
+            color: #facc15;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .review-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            color: #e2e8f0;
+            position: relative;
+            padding: 0 1rem;
+        }
+
+        .review-text::before,
+        .review-text::after {
+            content: '"';
+            font-size: 2rem;
+            color: #facc15;
+            position: absolute;
+            opacity: 0.3;
+        }
+
+        .review-text::before {
+            left: -5px;
+            top: -10px;
+        }
+
+        .review-text::after {
+            right: -5px;
+            bottom: -10px;
+        }
+
+        .reviewer-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(250, 204, 21, 0.1);
+        }
+
+        .reviewer-name {
+            color: #facc15;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .membership-plan {
+            background: rgba(250, 204, 21, 0.1);
+            color: #facc15;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(250, 204, 21, 0.3);
+        }
+
+        .join-date {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .reviews-section {
+                padding: 6rem 1rem;
+            }
+
+            .reviews-title {
+                font-size: 2rem;
+            }
+
+            .reviews-grid {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+
+            .review-card {
+                padding: 1.5rem;
+            }
+
+            .review-text {
+                font-size: 1rem;
+            }
+        }
+
+        .rating-input {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        .rating-input i {
+            font-size: 1.5rem;
+            color: #94a3b8;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .rating-input i:hover,
+        .rating-input i.active,
+        .rating-input i.selected {
+            color: #facc15;
+            transform: scale(1.2);
+        }
+
+        .rating-input i:hover ~ i {
+            color: #94a3b8;
+            transform: scale(1);
+        }
+
+        /* Add styles for radio button rating */
+        .rating-radio-group {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .rating-radio {
+            display: none;
+        }
+
+        .rating-label {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: #1a202c;
+            border: 1px solid #4a5568;
+            border-radius: 5px;
+            color: #e2e8f0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .rating-radio:checked + .rating-label {
+            background: #facc15;
+            color: #0d1529;
+            border-color: #facc15;
+        }
+
+        .rating-label:hover {
+            border-color: #facc15;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo-container">
+            <img src="images/logo2.jpg" alt="Elite Gym Logo" class="logo-img">
+            <div class="logo">Elite Gym</div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#membership">Membership</a></li>
+                <li id="fitnessNavItem" style="display: none;"><a href="fitness.html">Fitness</a></li>
+                <li><a href="reviews.html" class="active">Reviews</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li id="authLinks">
+                    <a href="login.html" class="login-link">Login</a>
+                    <a href="signup.html" class="signup-link">Sign Up</a>
+                </li>
+                <li id="profileLink" style="display: none;">
+                    <a href="profile.html">My Profile</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="reviews-section">
+        <div class="reviews-container">
+            <h2 class="reviews-title">Member Reviews</h2>
+            
+            <!-- Review Filters -->
+            <div class="review-filters">
+                <button class="filter-btn active" data-filter="all">All Reviews</button>
+                <button class="filter-btn" data-filter="premium">Premium Plan</button>
+                <button class="filter-btn" data-filter="standard">Standard Plan</button>
+                <button class="filter-btn" data-filter="basic">Basic Plan</button>
+            </div>
+
+            <!-- Reviews Grid -->
+            <div class="reviews-grid">
+                <!-- Reviews will be dynamically inserted here -->
+            </div>
+
+            <!-- Review Form -->
+            <div class="review-form">
+                <h3>Share Your Experience</h3>
+                <form id="reviewForm" action="submit_review.php" method="POST">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="membershipPlan">Membership Plan</label>
+                        <select id="membershipPlan" name="membershipPlan" required>
+                            <option value="">Select Plan</option>
+                            <option value="Basic Plan">Basic Plan</option>
+                            <option value="Standard Plan">Standard Plan</option>
+                            <option value="Premium Plan">Premium Plan</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Your Rating</label>
+                <div class="rating-radio-group">
+                    <input type="radio" id="rating1" name="rating" value="1" class="rating-radio" required>
+                    <label for="rating1" class="rating-label">1</label>
+                    
+                    <input type="radio" id="rating2" name="rating" value="2" class="rating-radio">
+                    <label for="rating2" class="rating-label">2</label>
+                    
+                    <input type="radio" id="rating3" name="rating" value="3" class="rating-radio">
+                    <label for="rating3" class="rating-label">3</label>
+                    
+                    <input type="radio" id="rating4" name="rating" value="4" class="rating-radio">
+                    <label for="rating4" class="rating-label">4</label>
+                    
+                    <input type="radio" id="rating5" name="rating" value="5" class="rating-radio">
+                    <label for="rating5" class="rating-label">5</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="review">Your Review</label>
+                        <textarea id="review" name="review" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Submit Review</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <div class="footer-logo">Elite Gym</div>
+                <p>Your premier fitness destination offering top-notch equipment, expert trainers, and a supportive community to help you achieve your fitness goals.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fa fa-instagram"></i></a>
+                    <a href="#"><i class="fa fa-facebook"></i></a>
+                    <a href="#"><i class="fa fa-twitter"></i></a>
+                    <a href="#"><i class="fa fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#services">Services</a></li>
+                    <li><a href="index.html#membership">Membership Plans</a></li>
+                    <li><a href="reviews.html">Reviews</a></li>
+                    <li><a href="index.html#contact">Contact Us</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Services</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html#services">Personal Training</a></li>
+                    <li><a href="index.html#services">Group Classes</a></li>
+                    <li><a href="index.html#services">Nutrition Counseling</a></li>
+                    <li><a href="index.html#services">Body Transformation</a></li>
+                    <li><a href="index.html#services">Wellness & Recovery</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact Info</h3>
+                <div class="footer-contact-item">
+                    <i class="fa fa-map-marker"></i>
+                    <div>123 Fitness Street<br>SRM-AP, Andhra Pradesh<br>India</div>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fa fa-phone"></i>
+                    <div>+91 8978836432</div>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="material-icons">mail</i>
+                    <div>Mark@elitegym.com</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Elite Gym. All Rights Reserved.</p>
+            <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Sample reviews data
+        const sampleReviews = [
+            {
+                name: "Sarah Johnson",
+                rating: 5,
+                text: "The personal training sessions have completely transformed my fitness journey. The trainers are incredibly knowledgeable and supportive.",
+                date: "January 2024",
+                plan: "Premium Plan"
+            },
+            {
+                name: "Michael Chen",
+                rating: 5,
+                text: "The group classes are amazing! The energy and motivation from both the instructors and other members keep me coming back every week.",
+                date: "February 2024",
+                plan: "Standard Plan"
+            },
+            {
+                name: "Emily Rodriguez",
+                rating: 5,
+                text: "The equipment is top-notch and always well-maintained. The staff is friendly and the atmosphere is perfect for serious training.",
+                date: "March 2024",
+                plan: "Basic Plan"
+            },
+            {
+                name: "David Wilson",
+                rating: 5,
+                text: "I've been a member for 6 months and have seen incredible results. The nutrition counseling has been particularly helpful.",
+                date: "December 2023",
+                plan: "Premium Plan"
+            },
+            {
+                name: "Lisa Thompson",
+                rating: 5,
+                text: "The recovery facilities are excellent. The sauna and massage services have helped me stay injury-free during my training.",
+                date: "November 2023",
+                plan: "Standard Plan"
+            },
+            {
+                name: "James Miller",
+                rating: 5,
+                text: "The 24/7 access is perfect for my schedule. The gym is always clean and well-equipped, even during off-peak hours.",
+                date: "October 2023",
+                plan: "Basic Plan"
+            },
+            // Duplicate reviews
+            {
+                name: "Sarah Johnson",
+                rating: 5,
+                text: "The personal training sessions have completely transformed my fitness journey. The trainers are incredibly knowledgeable and supportive.",
+                date: "January 2024",
+                plan: "Premium Plan"
+            },
+            {
+                name: "Michael Chen",
+                rating: 5,
+                text: "The group classes are amazing! The energy and motivation from both the instructors and other members keep me coming back every week.",
+                date: "February 2024",
+                plan: "Standard Plan"
+            },
+            {
+                name: "Emily Rodriguez",
+                rating: 5,
+                text: "The equipment is top-notch and always well-maintained. The staff is friendly and the atmosphere is perfect for serious training.",
+                date: "March 2024",
+                plan: "Basic Plan"
+            }
+        ];
+
+        // Function to load reviews from the database
+        function loadReviews() {
+            fetch('php/get_reviews.php')
+                .then(response => response.json())
+                .then(data => {
+                    const reviewsGrid = document.querySelector('.reviews-grid');
+                    reviewsGrid.innerHTML = '';
+                    
+                    if (data.status === 'success' && data.data && data.data.reviews) {
+                        const reviews = data.data.reviews;
+                        
+                        if (reviews.length === 0) {
+                            sampleReviews.forEach(review => {
+                                reviewsGrid.innerHTML += createReviewCard(review);
+                            });
+                        } else {
+                            reviews.forEach(review => {
+                                reviewsGrid.innerHTML += createReviewCard(review);
+                            });
+                        }
+                    } else {
+                        sampleReviews.forEach(review => {
+                            reviewsGrid.innerHTML += createReviewCard(review);
+                        });
+                    }
+                })
+                .catch(() => {
+                    const reviewsGrid = document.querySelector('.reviews-grid');
+                    reviewsGrid.innerHTML = '';
+                    sampleReviews.forEach(review => {
+                        reviewsGrid.innerHTML += createReviewCard(review);
+                    });
+                });
+        }
+
+        function createReviewCard(review) {
+            return `
+                <div class="review-card">
+                    <div class="rating">${"★".repeat(review.rating)}${"☆".repeat(5-review.rating)}</div>
+                    <p class="review-text">${review.text}</p>
+                    <div class="reviewer-info">
+                        <div>
+                            <div class="reviewer-name">${review.name}</div>
+                            <div class="join-date">Member since ${new Date(review.date).toLocaleDateString()}</div>
+                        </div>
+                        <div class="membership-plan">${review.plan} Member</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Check authentication status
+        function checkAuthStatus() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const authLinks = document.getElementById('authLinks');
+            const profileLink = document.getElementById('profileLink');
+            const fitnessNavItem = document.getElementById('fitnessNavItem');
+            
+            if (currentUser) {
+                if (authLinks) authLinks.style.display = 'none';
+                if (profileLink) profileLink.style.display = 'block';
+                if (fitnessNavItem) fitnessNavItem.style.display = 'block';
+            } else {
+                if (authLinks) authLinks.style.display = 'block';
+                if (profileLink) profileLink.style.display = 'none';
+                if (fitnessNavItem) fitnessNavItem.style.display = 'none';
+            }
+        }
+
+        // Initialize when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadReviews();
+            checkAuthStatus();
+        });
+
+        // Check auth status when navigating between pages
+        window.addEventListener('pageshow', checkAuthStatus);
+
+        // Check auth status when storage changes (login/logout)
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'currentUser') {
+                checkAuthStatus();
+            }
+        });
+    </script>
+</body>
+</html>

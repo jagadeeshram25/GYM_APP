@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Gym - Contact</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <style>
+        .navbar .logo-img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 50%;
+            filter: drop-shadow(0 0 5px rgba(250, 204, 21, 0.5));
+            transition: transform 0.3s ease;
+            border: 2px solid #facc15;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo-container">
+            <img src="images/logo2.jpg" alt="Elite Gym Logo" class="logo-img">
+            <div class="logo">Elite Gym</div>
+        </div>
+        <div class="menu-toggle">
+            <i class="fa fa-bars"></i>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="membership.html">Membership</a></li>
+                <li id="fitnessNavItem" style="display: none;"><a href="fitness.html">Fitness</a></li>
+                <li><a href="reviews.html">Reviews</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li id="authLinks">
+                    <a href="login.html" class="login-link">Login</a>
+                    <a href="signup.html" class="signup-link">Sign Up</a>
+                </li>
+                <li id="profileLink" style="display: none;">
+                    <a href="profile.html">My Profile</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="contact-section">
+        <div class="contact-container">
+            <div class="contact-info fade-in">
+                <h2>Contact Us</h2>
+                <h3>Location</h3>
+                <div class="contact-item">
+                    <i class="fa fa-map-marker"></i>
+                    <p>123 Fitness Street, SRM-AP, Andhra Pradesh, India</p>
+                </div>
+                
+                <h3>Contact Information</h3>
+                <div class="contact-item">
+                    <i class="fa fa-phone"></i>
+                    <p>+91 8978836432</p>
+                </div>
+                <div class="contact-item">
+                    <i class="material-icons">mail</i>
+                    <a href="mailto:mark@elitegym.com">Mark@elitegym.com</a>
+                </div>
+                
+                <h3>Opening Hours</h3>
+                <div class="opening-hours">
+                    <p><span>Monday - Friday:</span> 5:00 AM - 11:00 PM</p>
+                    <p><span>Saturday:</span> 7:00 AM - 10:00 PM</p>
+                    <p><span>Sunday:</span> 8:00 AM - 9:00 PM</p>
+                </div>
+                
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fa fa-instagram"></i></a>
+                    <a href="#"><i class="fa fa-facebook"></i></a>
+                    <a href="#"><i class="fa fa-twitter"></i></a>
+                    <a href="#"><i class="fa fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="form-container fade-in">
+                <h2>Get in Touch</h2>
+                <form id="contactForm" action="contact.php" method="POST">
+                    <input type="text" name="name" placeholder="Your Name" required>
+                    <input type="email" name="email" placeholder="Your Email" required>
+                    <input type="tel" name="phone" placeholder="Phone Number">
+                    <textarea name="message" placeholder="Your Message (Optional)"></textarea>
+                    <button class="btn" type="submit" name="submit">Send Message</button>
+                </form>
+                
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <div class="footer-logo">Elite Gym</div>
+                <p>Your premier fitness destination offering top-notch equipment, expert trainers, and a supportive community to help you achieve your fitness goals.</p>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/elitegym90?igsh=bmZkbjhycmk3djhw"><i class="fa fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/share/1W75e9nd4k/"><i class="fa fa-facebook"></i></a>
+                    <a href="#"><i class="fa fa-twitter"></i></a>
+                    <a href="#"><i class="fa fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="membership.html">Membership Plans</a></li>
+                    <li><a href="reviews.html">Testimonials</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Services</h3>
+                <ul class="footer-links">
+                    <li><a href="personal-training.html">Personal Training</a></li>
+                    <li><a href="group-classes.html">Group Classes</a></li>
+                    <li><a href="nutrition.html">Nutrition Counseling</a></li>
+                    <li><a href="body-transformation.html">Body Transformation</a></li>
+                    <li><a href="wellness.html">Wellness & Recovery</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact Info</h3>
+                <div class="footer-contact-item">
+                    <i class="fa fa-map-marker"></i>
+                    <div>123 Fitness Street<br>SRM-AP, Andhra Pradesh<br>India</div>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fa fa-phone"></i>
+                    <div>+91 8978836432</div>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="material-icons">mail</i>
+                    <div>Mark@elitegym.com</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Elite Gym. All Rights Reserved.</p>
+            <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </div>
+    </footer>
+
+    <!-- Same overlays and scripts as index.html -->
+    <div id="successPopup" class="success-popup">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closeSuccessPopup()">&times;</span>
+            <i class="fa fa-check-circle"></i>
+            <h3>Success!</h3>
+            <p>Your message has been sent successfully.</p>
+            <button class="btn" onclick="closeSuccessPopup()">OK</button>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/ac42c3b1f7.js" crossorigin="anonymous"></script>
+ 
+    <script src="js/scroll-animations.js"></script>
+    <script>
+        // Check authentication status
+        function checkAuthStatus() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const fitnessNavItem = document.getElementById('fitnessNavItem');
+            const authLinks = document.getElementById('authLinks');
+            const profileLink = document.getElementById('profileLink');
+            
+            if (currentUser) {
+                if (fitnessNavItem) {
+                    fitnessNavItem.style.display = 'block';
+                }
+                if (authLinks) {
+                    authLinks.style.display = 'none';
+                }
+                if (profileLink) {
+                    profileLink.style.display = 'block';
+                }
+            } else {
+                if (fitnessNavItem) {
+                    fitnessNavItem.style.display = 'none';
+                }
+                if (authLinks) {
+                    authLinks.style.display = 'block';
+                }
+                if (profileLink) {
+                    profileLink.style.display = 'none';
+                }
+            }
+        }
+
+        // Check auth status on page load
+        document.addEventListener('DOMContentLoaded', checkAuthStatus);
+
+        // Check auth status when navigating between pages
+        window.addEventListener('pageshow', checkAuthStatus);
+
+        // Check auth status when storage changes (login/logout)
+        window.addEventListener('storage', checkAuthStatus);
+
+        window.onload = function () {
+            if (window.location.search.includes('status=success')) {
+                document.getElementById("successPopup").style.display = "block";
+            }
+        };
+
+        function closeSuccessPopup() {
+            document.getElementById("successPopup").style.display = "none";
+            history.replaceState({}, document.title, "contact.html"); // clean the URL
+        }
+    </script>
+
+    
+</body>
+</html>

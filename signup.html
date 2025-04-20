@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Elite Gym</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            background: linear-gradient(to bottom, rgba(10, 18, 42, 0.9), rgba(22, 36, 71, 0.9)), url('gym-bg.jpg') no-repeat center center/cover;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: #e2e8f0;
+        }
+
+        .signup-container {
+            background: rgba(31, 41, 59, 0.95);
+            padding: 2rem;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .signup-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .signup-header h1 {
+            color: #facc15;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #e2e8f0;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #4a5568;
+            border-radius: 5px;
+            background: #1a202c;
+            color: #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #facc15;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(250, 204, 21, 0.2);
+        }
+
+        .password-strength-meter {
+            height: 4px;
+            background: #1f2937;
+            margin-top: 0.5rem;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .strength-bar {
+            height: 100%;
+            width: 0;
+            transition: all 0.3s ease;
+        }
+
+        .signup-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: #facc15;
+            color: #0d1529;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .signup-btn:hover {
+            background: #eab308;
+            transform: translateY(-2px);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .login-link a {
+            color: #facc15;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .login-link a:hover {
+            color: #eab308;
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <div class="signup-header">
+            <h1>Create Account</h1>
+            <p>Join Elite Gym and start your fitness journey</p>
+        </div>
+
+        <form id="signupForm" action="signup.php" method="POST">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" aria-label="Full Name" required>
+                <div class="error-message" id="nameError"></div>
+            </div>
+        
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" aria-label="Email Address" required>
+                <div class="error-message" id="emailError"></div>
+            </div>
+        
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" aria-label="Password" required>
+                <div class="password-strength-meter">
+                    <div class="strength-bar"></div>
+                </div>
+                <small id="strengthHint">Use 8+ characters with letters, numbers & symbols</small>
+                <div class="error-message" id="passwordError"></div>
+                <div class="show-password">
+                    <input type="checkbox" id="togglePassword">
+                    <label for="togglePassword">Show Password</label>
+                </div>
+            </div>
+        
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" aria-label="ConfirmPassword" required>
+                <div class="error-message" id="confirmPasswordError"></div>
+            </div>
+        
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" min="16" max="100" aria-label="Age" required>
+                <div class="error-message" id="ageError"></div>
+            </div>
+        
+            <div class="form-group">
+                <label for="fitnessGoal">Fitness Goal</label>
+                <select id="fitnessGoal" name="fitnessGoal" aria-label="FitnessGoal" required>
+                    <option value="">Select your goal</option>
+                    <option value="weight-loss">Weight Loss</option>
+                    <option value="muscle-gain">Muscle Gain</option>
+                    <option value="endurance">Endurance Training</option>
+                    <option value="flexibility">Flexibility & Mobility</option>
+                    <option value="general-fitness">General Fitness</option>
+                </select>
+                <div class="error-message" id="fitnessGoalError"></div>
+            </div>
+        
+            <div class="form-group">
+                <label for="membershipPlan">Membership Plan</label>
+                <select id="membershipPlan" name="membershipPlan" aria-label="MembershipPlan" required>
+                    <option value="">Select a plan</option>
+                    <option value="basic">Basic</option>
+                    <option value="standard">Standard</option>
+                    <option value="premium">Premium</option>
+                </select>
+                <div class="error-message" id="membershipPlanError"></div>
+            </div>
+        
+            <div class="form-group terms">
+                <input type="checkbox" id="terms" required>
+                <label for="terms">I agree to the <a href="#">terms and conditions</a></label>
+            </div>
+        
+            <button type="submit" name="submit" class="signup-btn">Sign Up</button>
+        </form>
+        
+
+        <div class="login-link">
+            Already have an account? <a href="login.html">Log In</a>
+        </div>
+    </div>
+
+    <script>
+        const togglePassword = document.getElementById('togglePassword');
+const passwordInput = document.getElementById('password');
+
+togglePassword.addEventListener('change', function () {
+    passwordInput.type = this.checked ? 'text' : 'password';
+});
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('signupForm');
+            const passwordInput = document.getElementById('password');
+            const strengthBar = document.querySelector('.strength-bar');
+
+            // Password strength checker
+            function checkPasswordStrength(password) {
+                let strength = 0;
+                const patterns = {
+                    length: password.length >= 8,
+                    lowercase: /[a-z]/.test(password),
+                    uppercase: /[A-Z]/.test(password),
+                    numbers: /\d/.test(password),
+                    special: /[!@#$%^&*]/.test(password)
+                };
+
+                strength += patterns.length ? 20 : 0;
+                strength += patterns.lowercase ? 20 : 0;
+                strength += patterns.uppercase ? 20 : 0;
+                strength += patterns.numbers ? 20 : 0;
+                strength += patterns.special ? 20 : 0;
+
+                return strength;
+            }
+
+            // Update password strength indicator
+            passwordInput.addEventListener('input', function() {
+                const strength = checkPasswordStrength(this.value);
+                strengthBar.style.width = strength + '%';
+                
+                if (strength <= 20) {
+                    strengthBar.style.backgroundColor = '#ef4444';
+                } else if (strength <= 40) {
+                    strengthBar.style.backgroundColor = '#f97316';
+                } else if (strength <= 60) {
+                    strengthBar.style.backgroundColor = '#facc15';
+                } else if (strength <= 80) {
+                    strengthBar.style.backgroundColor = '#84cc16';
+                } else {
+                    strengthBar.style.backgroundColor = '#22c55e';
+                }
+            });
+
+            // Form submission
+            form.addEventListener('submit', function(e) {
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                // Reset error messages
+                document.querySelectorAll('.error-message').forEach(error => {
+                    error.style.display = 'none';
+                });
+
+                // Get form values
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                const age = document.getElementById('age').value;
+                const fitnessGoal = document.getElementById('fitnessGoal').value;
+
+                // Validation
+                let isValid = true;
+
+                if (name.length < 2) {
+                    document.getElementById('nameError').textContent = 'Name must be at least 2 characters long';
+                    document.getElementById('nameError').style.display = 'block';
+                    isValid = false;
+                }
+
+                if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                    document.getElementById('emailError').textContent = 'Please enter a valid email address';
+                    document.getElementById('emailError').style.display = 'block';
+                    isValid = false;
+                }
+
+                if (checkPasswordStrength(password) < 60) {
+                    document.getElementById('passwordError').textContent = 'Password is too weak';
+                    document.getElementById('passwordError').style.display = 'block';
+                    isValid = false;
+                }
+
+                if (password !== confirmPassword) {
+                    document.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
+                    document.getElementById('confirmPasswordError').style.display = 'block';
+                    isValid = false;
+                }
+
+                if (age < 16 || age > 100) {
+                    document.getElementById('ageError').textContent = 'Age must be between 16 and 100';
+                    document.getElementById('ageError').style.display = 'block';
+                    isValid = false;
+                }
+
+                if (!fitnessGoal) {
+                    document.getElementById('fitnessGoalError').textContent = 'Please select a fitness goal';
+                    document.getElementById('fitnessGoalError').style.display = 'block';
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    // Check if email already exists
+                    const users = JSON.parse(localStorage.getItem('users') || '[]');
+                    if (users.some(user => user.email === email)) {
+                        document.getElementById('emailError').textContent = 'Email already registered';
+                        document.getElementById('emailError').style.display = 'block';
+                        return;
+                    }
+
+                    // Create user object
+                    const user = {
+                        name,
+                        email,
+                        password, // In a real application, this should be hashed
+                        age,
+                        fitnessGoal,
+                        membershipStatus: 'Basic',
+                        joinDate: new Date().toISOString(),
+                        lastLogin: new Date().toISOString()
+                    };
+
+                    // Save user
+                    users.push(user);
+                    localStorage.setItem('users', JSON.stringify(users));
+
+                    // Set current user and update auth status
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    checkAuthStatus();
+
+                    // Show success message and redirect to profile
+                    alert('Registration successful! Welcome to Elite Gym.');
+                    window.location.href = 'profile.html';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

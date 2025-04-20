@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Body Transformation - Elite Gym</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/ac42c3b1f7.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #0d1529;
+            color: #e2e8f0;
+            overflow-x: hidden;
+            padding-top: 80px; /* Added to prevent content from being hidden behind navbar */
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: rgba(10, 18, 42, 0.9);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            box-shadow: 0px 4px 15px rgba(250, 204, 21, 0.3);
+        }
+
+        .navbar .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+        }
+
+        .navbar .logo-img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 50%;
+            filter: drop-shadow(0 0 5px rgba(250, 204, 21, 0.5));
+            transition: transform 0.3s ease;
+            border: 2px solid #facc15;
+        }
+
+        .navbar .logo-img:hover {
+            transform: scale(1.1);
+        }
+
+        .navbar .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #facc15;
+            text-transform: uppercase;
+            text-shadow: 0 0 15px rgba(250, 204, 21, 0.8);
+            position: relative;
+        }
+
+        .navbar nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar ul li a {
+            text-decoration: none;
+            color: #f5f7fa;
+            transition: 0.3s;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .navbar ul li a:hover {
+            color: #facc15;
+            text-shadow: 0 0 5px rgba(250, 204, 21, 0.5);
+        }
+
+        .navbar ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #facc15;
+            transition: width 0.3s ease;
+        }
+
+        .navbar ul li a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            height: 50vh;
+            background: linear-gradient(to bottom, rgba(10, 18, 42, 0.9), rgba(22, 36, 71, 0.9)), url('images/body-transformation.jpg') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: bolder;
+            color: #facc15;
+            text-transform: uppercase;
+            text-shadow: 0px 0px 20px #facc15;
+        }
+
+        .content {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .program-card {
+            background: #1e293b;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .program-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(250, 204, 21, 0.3);
+        }
+
+        .program-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .program-info {
+            padding: 1.5rem;
+        }
+
+        .program-info h3 {
+            color: #facc15;
+            margin-bottom: 1rem;
+        }
+
+        .program-info p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .transformation-plans {
+            margin-top: 4rem;
+        }
+
+        .plan-card {
+            background: #1e293b;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(250, 204, 21, 0.3);
+        }
+
+        .plan-card h3 {
+            color: #facc15;
+            margin-bottom: 1rem;
+        }
+
+        .plan-card ul {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-card li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .plan-card li:before {
+            content: "✓";
+            color: #facc15;
+            position: absolute;
+            left: 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: #facc15;
+            color: #0d1529;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #eab308;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(250, 204, 21, 0.4);
+        }
+
+        .success-stories {
+            margin-top: 4rem;
+        }
+
+        .story-card {
+            background: #1e293b;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .story-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .story-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .story-content {
+            flex: 1;
+        }
+
+        .story-content h3 {
+            color: #facc15;
+            margin-bottom: 1rem;
+        }
+
+        .story-content p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        footer {
+            background: #0f172a;
+            color: white;
+            padding: 3rem 2rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-column h3 {
+            color: #facc15;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #e2e8f0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #facc15;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 120px; /* Adjusted for mobile navbar height */
+            }
+            
+            .navbar {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .navbar ul {
+                flex-direction: column;
+                gap: 1rem;
+                margin-top: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .programs-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .story-card {
+                flex-direction: column;
+            }
+
+            .story-image {
+                width: 100%;
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo-container">
+            <img src="images/logo2.jpg" alt="Elite Gym Logo" class="logo-img">
+            <div class="logo">Elite Gym</div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Body Transformation</h1>
+    </section>
+
+    <div class="content">
+        <h2>Transform Your Body</h2>
+        <p>Our comprehensive body transformation programs are designed to help you achieve your dream physique through personalized training, nutrition, and lifestyle coaching.</p>
+
+        <div class="programs-grid">
+            <div class="program-card">
+                <img src="images/body-weightloss.jpg" alt="Weight Loss Program">
+                <div class="program-info">
+                    <h3>Weight Loss Program</h3>
+                    <p>Comprehensive program designed to help you lose weight and maintain a healthy lifestyle.</p>
+                    <ul>
+                        <li>Customized workout plans</li>
+                        <li>Nutrition guidance</li>
+                        <li>Progress tracking</li>
+                        <li>Weekly check-ins</li>
+                    </ul>
+                    <a href="membership.html" class="btn">Get Started</a>
+                </div>
+            </div>
+
+            <div class="program-card">
+                <img src="images/group-cross.jpg" alt="Muscle Gain Program">
+                <div class="program-info">
+                    <h3>Muscle Gain Program</h3>
+                    <p>Build muscle mass and strength with our specialized training program.</p>
+                    <ul>
+                        <li>Strength training</li>
+                        <li>Nutrition planning</li>
+                        <li>Progress tracking</li>
+                        <li>Recovery protocols</li>
+                    </ul>
+                    <a href="membership.html" class="btn">Get Started</a>
+                </div>
+            </div>
+
+            <div class="program-card">
+                <img src="images/body-toning.jpg" alt="Body Toning Program">
+                <div class="program-info">
+                    <h3>Body Toning Program</h3>
+                    <p>Shape and tone your body with our targeted training program.</p>
+                    <ul>
+                        <li>Resistance training</li>
+                        <li>Cardio workouts</li>
+                        <li>Body composition tracking</li>
+                        <li>Flexibility training</li>
+                    </ul>
+                    <a href="membership.html" class="btn">Get Started</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="transformation-plans">
+            <h2>Transformation Packages</h2>
+            <div class="plan-card">
+                <h3>12-Week Transformation</h3>
+                <ul>
+                    <li>Initial body composition analysis</li>
+                    <li>Customized workout plan</li>
+                    <li>Personalized nutrition guide</li>
+                    <li>Weekly progress tracking</li>
+                    <li>Bi-weekly check-ins</li>
+                    <li>Access to transformation community</li>
+                </ul>
+                <a href="membership.html" class="btn">Get Started</a>
+            </div>
+
+            <div class="plan-card">
+                <h3>24-Week Transformation</h3>
+                <ul>
+                    <li>All 12-Week features</li>
+                    <li>Weekly one-on-one coaching</li>
+                    <li>Advanced nutrition planning</li>
+                    <li>Supplement guidance</li>
+                    <li>Progress photos and measurements</li>
+                    <li>24/7 support</li>
+                </ul>
+                <a href="membership.html" class="btn">Get Started</a>
+            </div>
+
+            <div class="plan-card">
+                <h3>Elite Transformation</h3>
+                <ul>
+                    <li>All 24-Week features</li>
+                    <li>Twice-weekly personal training</li>
+                    <li>Custom supplement stack</li>
+                    <li>Advanced body composition analysis</li>
+                    <li>Meal prep guidance</li>
+                    <li>Priority booking for all services</li>
+                </ul>
+                <a href="membership.html" class="btn">Get Started</a>
+            </div>
+        </div>
+
+        <div class="success-stories">
+            <h2>Success Stories</h2>
+            <div class="story-card">
+                <div class="story-image">
+                    <img src="images/john.jpg" alt="Success Story 1">
+                </div>
+                <div class="story-content">
+                    <h3>John's 12-Week Transformation</h3>
+                    <p>"I lost 15kg of fat and gained 5kg of muscle in just 12 weeks! The personalized training and nutrition plan made all the difference."</p>
+                    <p class="results">Results: -15kg fat, +5kg muscle</p>
+                </div>
+            </div>
+
+            <div class="story-card">
+                <div class="story-image">
+                    <img src="images/sarah.jpg" alt="Success Story 2">
+                </div>
+                <div class="story-content">
+                    <h3>Sarah's Body Recomposition</h3>
+                    <p>"The 24-week program helped me completely transform my body. I'm stronger, leaner, and more confident than ever before!"</p>
+                    <p class="results">Results: -10% body fat, +8kg muscle</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <div class="footer-logo">Elite Gym</div>
+                <p>Your premier fitness destination offering top-notch equipment, expert trainers, and a supportive community to help you achieve your fitness goals.</p>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/elitegym90?igsh=bmZkbjhycmk3djhw"><i class="fa fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/share/1W75e9nd4k/"><i class="fa fa-facebook"></i></a>
+                    <a href="#"><i class="fa fa-twitter"></i></a>
+                    <a href="#"><i class="fa fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="membership.html">Membership Plans</a></li>
+                    <li><a href="reviews.html">Testimonials</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Services</h3>
+                <ul class="footer-links">
+                    <li><a href="personal-training.html">Personal Training</a></li>
+                    <li><a href="group-classes.html">Group Classes</a></li>
+                    <li><a href="nutrition.html">Nutrition Counseling</a></li>
+                    <li><a href="body-transformation.html">Body Transformation</a></li>
+                    <li><a href="wellness.html">Wellness & Recovery</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact Info</h3>
+                <div class="footer-contact-item">
+                    <i class="fa fa-map-marker"></i>
+                    <div>123 Fitness Street<br>SRM-AP, Andhra Pradesh<br>India</div>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fa fa-phone"></i>
+                    <div>+91 8978836432</div>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="material-icons">mail</i>
+                    <div>Mark@elitegym.com</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Elite Gym. All Rights Reserved.</p>
+            <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Elite Gym</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0d1529 0%, #1a2a3a 100%);
+            min-height: 100vh;
+            color: #e2e8f0;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .profile-container {
+            max-width: 1000px;
+            margin: 100px auto;
+            padding: 2rem;
+        }
+
+        .profile-header {
+            background: rgba(30, 41, 59, 0.7);
+            padding: 3rem;
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .profile-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(250, 204, 21, 0.1), transparent);
+            transform: translateX(-100%);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            100% { transform: translateX(100%); }
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, #facc15, #eab308);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            color: #0d1529;
+            font-weight: bold;
+            box-shadow: 0 0 30px rgba(250, 204, 21, 0.3);
+            position: relative;
+            z-index: 1;
+            text-transform: uppercase;
+        }
+
+        .profile-pic::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #facc15, #eab308);
+            z-index: -1;
+            opacity: 0.5;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.3; }
+            100% { transform: scale(1); opacity: 0.5; }
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-info h1 {
+            color: #facc15;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+            text-shadow: 0 0 10px rgba(250, 204, 21, 0.3);
+        }
+
+        .profile-info p {
+            color: #94a3b8;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .membership-status {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(135deg, #facc15, #eab308);
+            color: #0d1529;
+            border-radius: 30px;
+            font-weight: bold;
+            margin-top: 1.5rem;
+            box-shadow: 0 5px 15px rgba(250, 204, 21, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .membership-status:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(250, 204, 21, 0.3);
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: rgba(30, 41, 59, 0.7);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 0.5s ease-out backwards;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(250, 204, 21, 0.2);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #facc15, #eab308);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            color: #facc15;
+            margin-bottom: 1rem;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(250, 204, 21, 0.3);
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .logout-btn {
+            position: fixed;
+            left: 20px;
+            top: 80px;
+            background: linear-gradient(135deg, #facc15, #eab308);
+            color: #0d1529;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(250, 204, 21, 0.3);
+            z-index: 100;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(250, 204, 21, 0.4);
+        }
+
+        .logout-btn i {
+            font-size: 1.2rem;
+        }
+
+        .navbar {
+            background: rgba(13, 21, 41, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 50%;
+            filter: drop-shadow(0 0 5px rgba(250, 204, 21, 0.5));
+            transition: transform 0.3s ease;
+            border: 2px solid #facc15;
+        }
+
+        .logo {
+            color: #facc15;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(250, 204, 21, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            padding-right: 2rem;
+        }
+
+        .nav-links a {
+            color: #facc15;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            background: rgba(250, 204, 21, 0.1);
+            border: 1px solid rgba(250, 204, 21, 0.2);
+            margin-left: 1rem;
+            margin-right: 1rem;
+        }
+
+        .nav-links a:hover {
+            color: #0d1529;
+            background: #facc15;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(250, 204, 21, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem;
+            }
+
+            .profile-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .navbar {
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: flex-end;
+                padding-right: 1rem;
+            }
+
+            .nav-links a {
+                margin-left: 0.5rem;
+                margin-right: 0.5rem;
+            }
+
+            .profile-container {
+                margin-top: 150px;
+                padding: 1rem;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(13, 21, 41, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #facc15;
+            border-top: 5px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Receipt Button Styles */
+        .receipt-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #facc15, #eab308);
+            color: #0f172a;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(250, 204, 21, 0.3);
+        }
+
+        .receipt-button i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .receipt-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(250, 204, 21, 0.4);
+        }
+
+        .receipt-button:hover i {
+            transform: translateX(5px);
+        }
+
+        .receipt-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .receipt-button:hover::before {
+            left: 100%;
+        }
+
+        .receipt-button:active {
+            transform: translateY(0);
+        }
+
+        .profile-actions {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 15px;
+            border: 1px solid rgba(250, 204, 21, 0.2);
+        }
+
+        /* Edit Profile Button */
+        .edit-profile-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #facc15, #eab308);
+            color: #0d1529;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(250, 204, 21, 0.3);
+        }
+
+        .edit-profile-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(250, 204, 21, 0.4);
+        }
+
+        /* Edit Profile Modal */
+        .edit-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .edit-modal-content {
+            background: #1e293b;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .edit-modal h2 {
+            color: #facc15;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .edit-form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .edit-form-group label {
+            display: block;
+            color: #e2e8f0;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .edit-form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #2d3748;
+            border-radius: 10px;
+            background: #1a202c;
+            color: #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .edit-form-group input:focus {
+            border-color: #facc15;
+            outline: none;
+            box-shadow: 0 0 10px rgba(250, 204, 21, 0.2);
+        }
+
+        .edit-modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .edit-modal-buttons button {
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .save-btn {
+            background: linear-gradient(135deg, #facc15, #eab308);
+            color: #0d1529;
+            border: none;
+        }
+
+        .cancel-btn {
+            background: transparent;
+            color: #e2e8f0;
+            border: 2px solid #e2e8f0;
+        }
+
+        .save-btn:hover, .cancel-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Profile Stats Animation */
+        .stat-card:nth-child(1) { animation-delay: 0.1s; }
+        .stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .stat-card:nth-child(3) { animation-delay: 0.3s; }
+        .stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Progress Bar for Stats */
+        .stat-progress {
+            width: 100%;
+            height: 6px;
+            background: #2d3748;
+            border-radius: 3px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #facc15, #eab308);
+            border-radius: 3px;
+            transition: width 1s ease-out;
+        }
+
+        /* Profile Actions Grid */
+        .profile-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .action-card {
+            background: rgba(30, 41, 59, 0.7);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(250, 204, 21, 0.2);
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(250, 204, 21, 0.2);
+        }
+
+        .action-card i {
+            font-size: 2rem;
+            color: #facc15;
+            margin-bottom: 1rem;
+        }
+
+        .action-card h3 {
+            color: #e2e8f0;
+            margin-bottom: 0.5rem;
+        }
+
+        .action-card p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Achievement Styles */
+        .achievements-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+            max-height: 60vh;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .achievement-card {
+            background: rgba(30, 41, 59, 0.7);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(250, 204, 21, 0.2);
+        }
+
+        .achievement-card i {
+            font-size: 2.5rem;
+            color: #facc15;
+            margin-bottom: 1rem;
+        }
+
+        .achievement-card h3 {
+            color: #e2e8f0;
+            margin-bottom: 0.5rem;
+        }
+
+        .achievement-card p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .achievement-status {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .achievement-status.achieved {
+            background: linear-gradient(135deg, #facc15, #eab308);
+            color: #0d1529;
+        }
+
+        .achievement-status.locked {
+            background: rgba(148, 163, 184, 0.2);
+            color: #94a3b8;
+        }
+
+        /* Schedule Styles */
+        .schedule-container {
+            max-height: 60vh;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .schedule-day {
+            background: rgba(30, 41, 59, 0.7);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(250, 204, 21, 0.2);
+        }
+
+        .schedule-day h3 {
+            color: #facc15;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .schedule-item {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            align-items: center;
+        }
+
+        .schedule-item .time {
+            color: #facc15;
+            font-weight: bold;
+        }
+
+        .schedule-item .class {
+            color: #e2e8f0;
+        }
+
+        .schedule-item .instructor {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="logo-container">
+            <img src="images/logo2.jpg" alt="Elite Gym Logo" class="logo-img">
+            <a href="index.html" class="logo">Elite Gym</a>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+        </div>
+    </nav>
+
+    <div class="profile-container">
+        <button class="logout-btn" onclick="handleLogout()">
+            <i class="fa fa-sign-out"></i>
+            Log Out
+        </button>
+        
+        <div class="profile-header">
+            <button class="edit-profile-btn" onclick="openEditModal()">
+                <i class="fa fa-edit"></i>
+                Edit Profile
+            </button>
+            <div class="profile-pic" id="profileInitial"></div>
+            <div class="profile-info">
+                <h1 id="userName"></h1>
+                <p id="userEmail"></p>
+                <p id="memberSince"></p>
+                <div class="membership-status" id="membershipStatus"></div>
+            </div>
+        </div>
+
+        <div class="profile-stats">
+            <div class="stat-card">
+                <div class="stat-value" id="workoutsCompleted"></div>
+                <div class="stat-label">Workouts Completed</div>
+                <div class="stat-progress">
+                    <div class="progress-bar" id="workoutsProgress"></div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="classesAttended"></div>
+                <div class="stat-label">Classes Attended</div>
+                <div class="stat-progress">
+                    <div class="progress-bar" id="classesProgress"></div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalHours"></div>
+                <div class="stat-label">Total Hours</div>
+                <div class="stat-progress">
+                    <div class="progress-bar" id="hoursProgress"></div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="fitnessPoints"></div>
+                <div class="stat-label">Fitness Points</div>
+                <div class="stat-progress">
+                    <div class="progress-bar" id="pointsProgress"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-actions">
+            <div class="action-card">
+                <i class="fa fa-receipt"></i>
+                <h3>View Receipts</h3>
+                <p>Access your payment history and receipts</p>
+                <a href="receipts.html" class="receipt-button">View Receipts</a>
+            </div>
+            <div class="action-card">
+                <i class="fa fa-calendar"></i>
+                <h3>Schedule</h3>
+                <p>View and manage your class schedule</p>
+                <a href="#" class="receipt-button" onclick="openScheduleModal()">View Schedule</a>
+            </div>
+            <div class="action-card">
+                <i class="fa fa-trophy"></i>
+                <h3>Achievements</h3>
+                <p>Track your fitness achievements</p>
+                <a href="#" class="receipt-button" onclick="openAchievementsModal()">View Achievements</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="edit-modal" id="editModal">
+        <div class="edit-modal-content">
+            <h2>Edit Profile</h2>
+            <form id="editProfileForm">
+                <div class="edit-form-group">
+                    <label for="editName">Name</label>
+                    <input type="text" id="editName" required>
+                </div>
+                <div class="edit-form-group">
+                    <label for="editEmail">Email</label>
+                    <input type="email" id="editEmail" required>
+                </div>
+                <div class="edit-form-group">
+                    <label for="editPhone">Phone</label>
+                    <input type="tel" id="editPhone">
+                </div>
+                <div class="edit-form-group">
+                    <label for="editAddress">Address</label>
+                    <input type="text" id="editAddress">
+                </div>
+                <div class="edit-modal-buttons">
+                    <button type="submit" class="save-btn">Save Changes</button>
+                    <button type="button" class="cancel-btn" onclick="closeEditModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Achievements Modal -->
+    <div class="edit-modal" id="achievementsModal">
+        <div class="edit-modal-content">
+            <h2>Your Achievements</h2>
+            <div class="achievements-container">
+                <div class="achievement-card">
+                    <i class="fa fa-trophy"></i>
+                    <h3>First Workout</h3>
+                    <p>Completed your first workout session</p>
+                    <div class="achievement-status achieved">Achieved</div>
+                </div>
+                <div class="achievement-card">
+                    <i class="fa fa-fire"></i>
+                    <h3>Consistency Master</h3>
+                    <p>Attended 10 consecutive workout sessions</p>
+                    <div class="achievement-status achieved">Achieved</div>
+                </div>
+                <div class="achievement-card">
+                    <i class="fa fa-dumbbell"></i>
+                    <h3>Strength Builder</h3>
+                    <p>Increased bench press by 20kg</p>
+                    <div class="achievement-status achieved">Achieved</div>
+                </div>
+                <div class="achievement-card">
+                    <i class="fa fa-heart"></i>
+                    <h3>Cardio King</h3>
+                    <p>Completed 5 cardio sessions</p>
+                    <div class="achievement-status achieved">Achieved</div>
+                </div>
+                <div class="achievement-card">
+                    <i class="fa fa-star"></i>
+                    <h3>Early Bird</h3>
+                    <p>Attended 5 morning sessions</p>
+                    <div class="achievement-status locked">Locked</div>
+                </div>
+                <div class="achievement-card">
+                    <i class="fa fa-medal"></i>
+                    <h3>Social Butterfly</h3>
+                    <p>Participated in 3 group classes</p>
+                    <div class="achievement-status locked">Locked</div>
+                </div>
+            </div>
+            <div class="edit-modal-buttons">
+                <button type="button" class="cancel-btn" onclick="closeAchievementsModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Schedule Modal -->
+    <div class="edit-modal" id="scheduleModal">
+        <div class="edit-modal-content">
+            <h2>Your Schedule</h2>
+            <div class="schedule-container">
+                <div class="schedule-day">
+                    <h3>Monday</h3>
+                    <div class="schedule-item">
+                        <span class="time">06:00 AM</span>
+                        <span class="class">Morning Yoga</span>
+                        <span class="instructor">Sarah Johnson</span>
+                    </div>
+                    <div class="schedule-item">
+                        <span class="time">10:00 AM</span>
+                        <span class="class">Cardio Blast</span>
+                        <span class="instructor">Emma Davis</span>
+                    </div>
+                    <div class="schedule-item">
+                        <span class="time">06:00 PM</span>
+                        <span class="class">Strength Training</span>
+                        <span class="instructor">Mike Smith</span>
+                    </div>
+                </div>
+                <div class="schedule-day">
+                    <h3>Tuesday</h3>
+                    <div class="schedule-item">
+                        <span class="time">07:00 AM</span>
+                        <span class="class">HIIT Workout</span>
+                        <span class="instructor">John Wilson</span>
+                    </div>
+                    <div class="schedule-item">
+                        <span class="time">05:00 PM</span>
+                        <span class="class">CrossFit</span>
+                        <span class="instructor">Alex Brown</span>
+                    </div>
+                </div>
+                <div class="schedule-day">
+                    <h3>Wednesday</h3>
+                    <div class="schedule-item">
+                        <span class="time">06:30 AM</span>
+                        <span class="class">Power Yoga</span>
+                        <span class="instructor">Lisa Chen</span>
+                    </div>
+                    <div class="schedule-item">
+                        <span class="time">04:00 PM</span>
+                        <span class="class">Zumba</span>
+                        <span class="instructor">Maria Garcia</span>
+                    </div>
+                    <div class="schedule-item">
+                        <span class="time">07:00 PM</span>
+                        <span class="class">Boxing</span>
+                        <span class="instructor">Tom Lee</span>
+                    </div>
+                </div>
+                <div class="schedule-day">
+                    <h3>Thursday</h3>
+                    <div class="schedule-item">
+                        <span class="time">08:00 AM</span>
+                        <span class="class">Pilates</span>
+                        <span class="instructor">Anna White</span>
+                    </div>
+                    <div class="schedule-item">
+                        <span class="time">06:00 PM</span>
+                        <span class="class">Weight Training</span>
+                        <span class="instructor">Chris Taylor</span>
+                    </div>
+                </div>
+                <div class="schedule-day">
+                    <h3>Friday</h3>
+                    <div class="schedule-item">
+                        <span class="time">07:00 AM</span>
+                        <span class="class">HIIT Workout</span>
+                        <span class="instructor">John Wilson</span>
+                    </div>
+                    <div class="schedule-item">
+                        <span class="time">05:00 PM</span>
+                        <span class="class">Dance Fitness</span>
+                        <span class="instructor">Sophie Martin</span>
+                    </div>
+                </div>
+                <div class="schedule-day">
+                    <h3>Saturday</h3>
+                    <div class="schedule-item">
+                        <span class="time">09:00 AM</span>
+                        <span class="class">Yoga Flow</span>
+                        <span class="instructor">Sarah Johnson</span>
+                    </div>
+                    <div class="schedule-item">
+                        <span class="time">11:00 AM</span>
+                        <span class="class">Kids Fitness</span>
+                        <span class="instructor">Emma Davis</span>
+                    </div>
+                    <div class="schedule-item">
+                        <span class="time">04:00 PM</span>
+                        <span class="class">Mixed Martial Arts</span>
+                        <span class="instructor">Tom Lee</span>
+                    </div>
+                </div>
+                <div class="schedule-day">
+                    <h3>Sunday</h3>
+                    <div class="schedule-item">
+                        <span class="time">10:00 AM</span>
+                        <span class="class">Family Yoga</span>
+                        <span class="instructor">Lisa Chen</span>
+                    </div>
+                    <div class="schedule-item">
+                        <span class="time">02:00 PM</span>
+                        <span class="class">Stretching & Recovery</span>
+                        <span class="instructor">Anna White</span>
+                    </div>
+                </div>
+            </div>
+            <div class="edit-modal-buttons">
+                <button type="button" class="save-btn" onclick="addNewClass()">Add New Class</button>
+                <button type="button" class="cancel-btn" onclick="closeScheduleModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check authentication on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            
+            if (!currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Load user data
+            document.getElementById('profileInitial').textContent = currentUser.name.charAt(0).toUpperCase();
+            document.getElementById('userName').textContent = currentUser.name;
+            document.getElementById('userEmail').textContent = `Email: ${currentUser.email}`;
+            document.getElementById('memberSince').textContent = `Member Since: ${new Date(currentUser.joinDate || Date.now()).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`;
+            document.getElementById('membershipStatus').textContent = currentUser.membershipPlan || 'No Active Membership';
+
+            // Generate random stats
+            document.getElementById('workoutsCompleted').textContent = Math.floor(Math.random() * 41) + 10;
+            document.getElementById('classesAttended').textContent = Math.floor(Math.random() * 16) + 5;
+            document.getElementById('totalHours').textContent = Math.floor(Math.random() * 81) + 20;
+            document.getElementById('fitnessPoints').textContent = Math.floor(Math.random() * 401) + 100;
+
+            // Initialize progress bars
+            initializeProgressBars();
+
+            // Hide loading animation
+            document.querySelector('.loading').style.display = 'none';
+        });
+
+        function handleLogout() {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'login.html';
+        }
+
+        // Initialize progress bars
+        function initializeProgressBars() {
+            const workouts = parseInt(document.getElementById('workoutsCompleted').textContent);
+            const classes = parseInt(document.getElementById('classesAttended').textContent);
+            const hours = parseInt(document.getElementById('totalHours').textContent);
+            const points = parseInt(document.getElementById('fitnessPoints').textContent);
+
+            document.getElementById('workoutsProgress').style.width = `${(workouts / 50) * 100}%`;
+            document.getElementById('classesProgress').style.width = `${(classes / 20) * 100}%`;
+            document.getElementById('hoursProgress').style.width = `${(hours / 100) * 100}%`;
+            document.getElementById('pointsProgress').style.width = `${(points / 500) * 100}%`;
+        }
+
+        // Edit Profile Modal Functions
+        function openEditModal() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            document.getElementById('editName').value = currentUser.name;
+            document.getElementById('editEmail').value = currentUser.email;
+            document.getElementById('editPhone').value = currentUser.phone || '';
+            document.getElementById('editAddress').value = currentUser.address || '';
+            document.getElementById('editModal').style.display = 'flex';
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+
+        // Handle form submission
+        document.getElementById('editProfileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            
+            // Update user data
+            currentUser.name = document.getElementById('editName').value;
+            currentUser.email = document.getElementById('editEmail').value;
+            currentUser.phone = document.getElementById('editPhone').value;
+            currentUser.address = document.getElementById('editAddress').value;
+            
+            // Save to localStorage
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            
+            // Update profile display
+            document.getElementById('profileInitial').textContent = currentUser.name.charAt(0).toUpperCase();
+            document.getElementById('userName').textContent = currentUser.name;
+            document.getElementById('userEmail').textContent = `Email: ${currentUser.email}`;
+            
+            // Close modal
+            closeEditModal();
+            
+            // Show success message
+            alert('Profile updated successfully!');
+        });
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const editModal = document.getElementById('editModal');
+            const achievementsModal = document.getElementById('achievementsModal');
+            const scheduleModal = document.getElementById('scheduleModal');
+            
+            if (event.target === editModal) {
+                closeEditModal();
+            }
+            if (event.target === achievementsModal) {
+                closeAchievementsModal();
+            }
+            if (event.target === scheduleModal) {
+                closeScheduleModal();
+            }
+        }
+
+        // Achievements Modal Functions
+        function openAchievementsModal() {
+            document.getElementById('achievementsModal').style.display = 'flex';
+        }
+
+        function closeAchievementsModal() {
+            document.getElementById('achievementsModal').style.display = 'none';
+        }
+
+        // Schedule Modal Functions
+        function openScheduleModal() {
+            document.getElementById('scheduleModal').style.display = 'flex';
+        }
+
+        function closeScheduleModal() {
+            document.getElementById('scheduleModal').style.display = 'none';
+        }
+
+        function addNewClass() {
+            // This function can be expanded to add new classes to the schedule
+            alert('Feature coming soon! You will be able to add new classes to your schedule.');
+        }
+    </script>
+</body>
+</html>

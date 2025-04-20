@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Gym - Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <style>
+        .navbar .logo-img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 50%;
+            filter: drop-shadow(0 0 5px rgba(250, 204, 21, 0.5));
+            transition: transform 0.3s ease;
+            border: 2px solid #facc15;
+        }
+
+        .trainers-section {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #0d1529 0%, #1e293b 100%);
+            overflow: hidden;
+        }
+
+        .trainers-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+        }
+
+        .trainers-scroll {
+            display: flex;
+            gap: 2rem;
+            transition: transform 0.3s ease;
+            will-change: transform;
+        }
+
+        .trainer-card {
+            flex: 0 0 300px;
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(250, 204, 21, 0.1);
+        }
+
+        .facility-card {
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(250, 204, 21, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 1.5rem;
+        }
+
+        .facility-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .facility-icon {
+            font-size: 2.5rem;
+            color: #facc15;
+            margin-bottom: 1rem;
+        }
+
+        .facility-image {
+            width: 100%;
+            height: 200px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .facility-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .facility-card:hover .facility-image img {
+            transform: scale(1.1);
+        }
+
+        .facility-title {
+            color: #facc15;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .facility-description {
+            color: #e2e8f0;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo-container">
+            <img src="images/logo2.jpg" alt="Elite Gym Logo" class="logo-img">
+            <div class="logo">Elite Gym</div>
+        </div>
+        <div class="menu-toggle">
+            <i class="fa fa-bars"></i>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="membership.html">Membership</a></li>
+                <li id="fitnessNavItem" style="display: none;"><a href="fitness.html">Fitness</a></li>
+                <li><a href="reviews.html">Reviews</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li id="authLinks">
+                    <a href="login.html" class="login-link">Login</a>
+                    <a href="signup.html" class="signup-link">Sign Up</a>
+                </li>
+                <li id="profileLink" style="display: none;">
+                    <a href="profile.html">My Profile</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="video-container">
+            <video autoplay loop muted>
+                <source src="images2/bg1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="hero-text">
+                <h1>Unlock Your True Power</h1>
+                <h3>Be a Part of Elite Gym Family</h3><br>
+                <p>Join our fitness community and transform your body today!</p><br><br>
+                <div class="hero-buttons">
+                    <a href="images1/virtualtour.mp4" class="btn">Virtual Tour</a>
+                    <a href="https://www.google.com/maps?q=SRM+University+AP"  class="btn">Our Location</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="services1">
+        <div class="services-card1 fade-in">
+            <h1>Achieve Your Fitness Goals</h1><br><br>
+            <p>Flexible membership packages to suit all levels of training to help achieve your fitness goals</p><br><br>
+            <a href="membership.html" class="btn">Join Now</a>
+        </div>
+    </section>
+
+    <section class="trainers-section">
+        <h2>Meet Our Expert Trainers</h2>
+        <div class="trainers-container">
+            <div class="trainers-scroll">
+                <div class="trainer-card">
+                    <div class="trainer-image">
+                        <img src="images/trainer1.jpg" alt="Trainer 1">
+                    </div>
+                    <div class="trainer-info">
+                        <h3>Sarah</h3>
+                        <p class="specialty">Strength Training</p>
+                        <p class="experience">8 years experience</p>
+                    </div>
+                </div>
+                <div class="trainer-card">
+                    <div class="trainer-image">
+                        <img src="images/trainer2.jpg" alt="Trainer 2">
+                    </div>
+                    <div class="trainer-info">
+                        <h3>John</h3>
+                        <p class="specialty">CrossFit</p>
+                        <p class="experience">6 years experience</p>
+                    </div>
+                </div>
+                <div class="trainer-card">
+                    <div class="trainer-image">
+                        <img src="images/trainer3.jpg" alt="Trainer 3">
+                    </div>
+                    <div class="trainer-info">
+                        <h3>Mike Williams</h3>
+                        <p class="specialty">Cardio & HIIT</p>
+                        <p class="experience">10 years experience</p>
+                    </div>
+                </div>
+                <div class="trainer-card">
+                    <div class="trainer-image">
+                        <img src="images/trainer4.jpg" alt="Trainer 4">
+                    </div>
+                    <div class="trainer-info">
+                        <h3>Mark</h3>
+                        <p class="specialty">Yoga & Flexibility</p>
+                        <p class="experience">7 years experience</p>
+                    </div>
+                </div>
+                <div class="trainer-card">
+                    <div class="trainer-image">
+                        <img src="images/trainer5.jpg" alt="Trainer 5">
+                    </div>
+                    <div class="trainer-info">
+                        <h3>Emily</h3>
+                        <p class="specialty">Bodybuilding</p>
+                        <p class="experience">12 years experience</p>
+                    </div>
+                </div>
+                <div class="trainer-card">
+                    <div class="trainer-image">
+                        <img src="images/trainer6.jpg" alt="Trainer 6">
+                    </div>
+                    <div class="trainer-info">
+                        <h3>Ashwin</h3>
+                        <p class="specialty">Functional Training</p>
+                        <p class="experience">9 years experience</p>
+                    </div>
+                </div>
+                <!-- Duplicate cards for seamless scrolling -->
+                <div class="trainer-card">
+                    <div class="trainer-image">
+                        <img src="images/trainer1.jpg" alt="Trainer 1">
+                    </div>
+                    <div class="trainer-info">
+                        <h3>Sarah</h3>
+                        <p class="specialty">Strength Training</p>
+                        <p class="experience">8 years experience</p>
+                    </div>
+                </div>
+                <div class="trainer-card">
+                    <div class="trainer-image">
+                        <img src="images/trainer2.jpg" alt="Trainer 2">
+                    </div>
+                    <div class="trainer-info">
+                        <h3> John</h3>
+                        <p class="specialty">CrossFit</p>
+                        <p class="experience">6 years experience</p>
+                    </div>
+                </div>
+                <div class="trainer-card">
+                    <div class="trainer-image">
+                        <img src="images/trainer3.jpg" alt="Trainer 3">
+                    </div>
+                    <div class="trainer-info">
+                        <h3>Mike Williams</h3>
+                        <p class="specialty">Cardio & HIIT</p>
+                        <p class="experience">10 years experience</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="uncle-section">
+        <div class="gallery-container">
+            <div class="gallery-section">
+                <div class="gallery-item">
+                    <div class="image-wrapper">
+                        <img src="images/image1.jpg" alt="Fitness 1">
+                        <div class="content-overlay">
+                            <div class="content-details">
+                                <h3>Transform Your Body</h3>
+                                <p>"The only bad workout is the one that didn't happen."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="image-wrapper">
+                        <img src="images/image2.jpg" alt="Fitness 2">
+                        <div class="content-overlay">
+                            <div class="content-details">
+                                <h3>Build Strength</h3>
+                                <p>"Strength does not come from physical capacity. It comes from an indomitable will."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="image-wrapper">
+                        <img src="images/body-muscle.avif" alt="Fitness 3">
+                        <div class="content-overlay">
+                            <div class="content-details">
+                                <h3>Push Your Limits</h3>
+                                <p>"Your body can stand almost anything. It's your mind that you have to convince."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="image-wrapper">
+                        <img src="images/image3.jpg" alt="Training">
+                        <div class="content-overlay">
+                            <div class="content-details">
+                                <h3>Group Training</h3>
+                                <p>"Train together, grow together. Join our community of fitness enthusiasts."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="image-wrapper">
+                        <img src="images/gym-boy.jpg" alt="Badminton">
+                        <div class="content-overlay">
+                            <div class="content-details">
+                                <h3>Sports Excellence</h3>
+                                <p>"Master your game, perfect your skills, and achieve sporting excellence."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="image-wrapper">
+                        <img src="images/john.jpg" alt="Strength">
+                        <div class="content-overlay">
+                            <div class="content-details">
+                                <h3>Power Training</h3>
+                                <p>"Unleash your inner strength and discover what you're truly capable of."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-section">
+                <div class="gallery-item">
+                    <div class="image-wrapper">
+                        <img src="images/image4.jpg" alt="Fitness 4">
+                        <div class="content-overlay">
+                            <div class="content-details">
+                                <h3>Achieve Greatness</h3>
+                                <p>"The difference between try and triumph is just a little umph!"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="image-wrapper">
+                        <img src="images/image5.jpg" alt="Fitness 5">
+                        <div class="content-overlay">
+                            <div class="content-details">
+                                <h3>Stay Committed</h3>
+                                <p>"Success is what comes after you stop making excuses."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="image-wrapper">
+                        <img src="images/bg3.jpg" alt="Dancing">
+                        <div class="content-overlay">
+                            <div class="content-details">
+                                <h3>Dance Fitness</h3>
+                                <p>"Move to the rhythm, dance to your fitness goals."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="image-wrapper">
+                        <img src="images/img5.avif" alt="Weights">
+                        <div class="content-overlay">
+                            <div class="content-details">
+                                <h3>Weight Training</h3>
+                                <p>"Lift your way to a stronger, healthier you."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Additional Images Section -->
+            <div class="gallery-section">
+                <div class="gallery-item">
+                    <div class="image-wrapper">
+                        <img src="images/blog-1.jpg" alt="Stretching">
+                        <div class="content-overlay">
+                            <div class="content-details">
+                                <h3>Flexibility Training</h3>
+                                <p>"Stretch your limits, enhance your mobility, and improve your performance."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="image-wrapper">
+                        <img src="images/blog-3.jpg" alt="Gym">
+                        <div class="content-overlay">
+                            <div class="content-details">
+                                <h3>Premium Facilities</h3>
+                                <p>"Train in a world-class environment with state-of-the-art equipment."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="facilities-section">
+        <div class="facilities-container">
+            <h2 class="section-title">Our Premium Facilities</h2>
+            <p class="section-subtitle">Experience luxury and comfort in every aspect of your workout</p>
+            
+            <div class="facilities-grid">
+                <div class="facility-card">
+                    <div class="facility-image">
+                        <img src="images/locker.webp" alt="Locker Room">
+                    </div>
+                    <div class="facility-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>Locker Rooms</h3>
+                    <p>Spacious, secure locker rooms with premium amenities for your convenience</p>
+                </div>
+                
+                <div class="facility-card">
+                    <div class="facility-image">
+                        <img src="images/steam.jpg" alt="Steam & Shower">
+                    </div>
+                    <div class="facility-icon">
+                        <i class="fas fa-shower"></i>
+                    </div>
+                    <h3>Steam & Shower</h3>
+                    <p>Luxurious steam rooms and private showers for post-workout relaxation</p>
+                </div>
+                
+                <div class="facility-card">
+                    <div class="facility-image">
+                        <img src="images/parking.jpg" alt="Free Parking">
+                    </div>
+                    <div class="facility-icon">
+                        <i class="fas fa-parking"></i>
+                    </div>
+                    <h3>Free Parking</h3>
+                    <p>Ample parking space for members, ensuring a hassle-free visit</p>
+                </div>
+                
+                <div class="facility-card">
+                    <div class="facility-image">
+                        <img src="images/wi-fi.webp" alt="High-Speed WiFi">
+                    </div>
+                    <div class="facility-icon">
+                        <i class="fas fa-wifi"></i>
+                    </div>
+                    <h3>High-Speed WiFi</h3>
+                    <p>Stay connected with our complimentary high-speed internet access</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="gallery">
+        <div class="gallery-container">
+            <div class="overlay-text">Fun, trainer-led group classes</div>
+            <div class="grid">
+                <div class="grid-item"><img src="images/img1.avif" alt="Training"></div>
+                <div class="grid-item"><img src="images/img2.avif" alt="Badminton"></div>
+                <div class="grid-item"><img src="images/img3.avif" alt="Strength"></div>
+                <div class="grid-item"><img src="images/img4.avif" alt="Dancing"></div>
+                <div class="grid-item"><img src="images/img5.avif" alt="Weights"></div>
+                <div class="grid-item"><img src="images/img6.jpg" alt="Stretching"></div>
+                <div class="grid-item"><img src="images/img7.jpg" alt="Gym"></div>
+                <div class="grid-item"><img src="images/img8.avif" alt="Workout"></div>
+                <div class="grid-item"><img src="images/img9.jpg" alt="Boxing"></div>
+                <div class="grid-item"><img src="images/img10.jpg" alt="Yoga"></div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <div class="footer-logo">Elite Gym</div>
+                <p>Your premier fitness destination offering top-notch equipment, expert trainers, and a supportive community to help you achieve your fitness goals.</p>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/elitegym90?igsh=bmZkbjhycmk3djhw"><i class="fa fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/share/1W75e9nd4k/"><i class="fa fa-facebook"></i></a>
+                    <a href="#"><i class="fa fa-twitter"></i></a>
+                    <a href="#"><i class="fa fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="membership.html">Membership Plans</a></li>
+                    <li><a href="reviews.html">Testimonials</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Services</h3>
+                <ul class="footer-links">
+                    <li><a href="personal-training.html">Personal Training</a></li>
+                    <li><a href="group-classes.html">Group Classes</a></li>
+                    <li><a href="nutrition.html">Nutrition Counseling</a></li>
+                    <li><a href="body-transformation.html">Body Transformation</a></li>
+                    <li><a href="wellness.html">Wellness & Recovery</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact Info</h3>
+                <div class="footer-contact-item">
+                    <i class="fa fa-map-marker"></i>
+                    <div>123 Fitness Street<br>SRM-AP, Andhra Pradesh<br>India</div>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fa fa-phone"></i>
+                    <div>+91 8978836432</div>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="material-icons">mail</i>
+                    <div>Mark@elitegym.com</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Elite Gym. All Rights Reserved.</p>
+            <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </div>
+    </footer>
+
+    <!-- Overlay Elements -->
+    <div id="videoOverlay" class="video-overlay">
+        <span class="close-btn" onclick="closeVideo()">&times;</span>
+        <iframe id="youtubeVideo" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    <div id="locationOverlay" class="location-overlay">
+        <span class="close-btn" onclick="closeLocation()">&times;</span>
+        <img src="images/gym-location.jpg" alt="Gym Location">
+    </div>
+
+    <div id="successPopup" class="success-popup">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closeSuccessPopup()">&times;</span>
+            <i class="fas fa-check-circle"></i>
+            <h3>Success!</h3>
+            <p>Your message has been sent successfully.</p>
+            <button class="btn" onclick="closeSuccessPopup()">OK</button>
+        </div>
+    </div>
+
+    <div class="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeAuthModal()">&times;</span>
+            <div class="auth-content">
+                <i class="fas fa-user-lock"></i>
+                <h2>Authentication Required</h2>
+                <p>Please log in or sign up to purchase a membership plan.</p>
+                <div class="auth-buttons">
+                    <a href="login.html" class="btn">Login</a>
+                    <a href="signup.html" class="btn">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/ac42c3b1f7.js" crossorigin="anonymous"></script>
+    <script src="js/main.js"></script>
+    <script src="js/scroll-animations.js"></script>
+    <script>
+        // Trainer section infinite scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const trainersScroll = document.querySelector('.trainers-scroll');
+            const trainerCards = document.querySelectorAll('.trainer-card');
+            const cardWidth = trainerCards[0].offsetWidth;
+            let currentPosition = 0;
+            const scrollSpeed = 5; // Adjust speed as needed
+
+            function scrollTrainers() {
+                currentPosition -= scrollSpeed;
+                if (currentPosition <= -cardWidth * 6) { // Reset when scrolled through all 6 trainers
+                    currentPosition = 0;
+                }
+                trainersScroll.style.transform = `translateX(${currentPosition}px)`;
+                requestAnimationFrame(scrollTrainers);
+            }
+
+            // Start the animation
+            scrollTrainers();
+        });
+    </script>
+</body>
+</html>
